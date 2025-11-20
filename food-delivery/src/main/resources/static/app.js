@@ -38,13 +38,13 @@ function renderMenu(items) {
         const card = document.createElement("div");
         card.className = "card";
 
-        // We pass the 'index' to addToCart so we know exactly which object was clicked
+        // CHANGED: Used '₹' symbol
         card.innerHTML = `
             <img src="${item.imageUrl}" alt="${item.name}">
             <div class="card-body">
                 <div style="display:flex; justify-content:space-between; align-items:center">
                     <h3>${item.name}</h3>
-                    <span class="price">$${item.price}</span>
+                    <span class="price">₹${item.price}</span>
                 </div>
                 <p style="color:gray; font-size:0.9rem">${item.category}</p>
                 <button class="btn-add" onclick="addToCart(${index})">Add to Cart</button>
@@ -98,7 +98,9 @@ function openCheckoutModal() {
     const itemNames = cart.map(i => i.name).join(", ");
 
     summary.innerText = itemNames.length > 50 ? itemNames.substring(0, 50) + "..." : itemNames;
-    totalEl.innerText = "$" + total.toFixed(2);
+
+    // CHANGED: Used '₹' symbol
+    totalEl.innerText = "₹" + total.toFixed(2);
 
     modal.showModal(); // Native HTML Dialog function
 }
@@ -147,9 +149,34 @@ async function submitOrder(event) {
 // --- SEEDING ---
 async function seedDatabase() {
     const dummyData = [
-        { name: "Cheese Burst Pizza", price: 12.99, category: "Pizza", imageUrl: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80" },
-        { name: "Mega Chicken Burger", price: 8.50, category: "Burger", imageUrl: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80" },
-        { name: "Spicy Tacos", price: 6.00, category: "Mexican", imageUrl: "https://images.unsplash.com/photo-1565299585323-38d68c8e1297?auto=format&fit=crop&w=800&q=80" }
+        // --- PIZZAS ---
+        { name: "Cheese Burst Pizza", price: 299, category: "Pizza", imageUrl: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80" },
+        { name: "Pepperoni Feast", price: 349, category: "Pizza", imageUrl: "https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=800&q=80" },
+        { name: "Veggie Supreme", price: 249, category: "Pizza", imageUrl: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=800&q=80" },
+
+        // --- BURGERS ---
+        { name: "Mega Chicken Burger", price: 199, category: "Burger", imageUrl: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80" },
+        { name: "Classic Cheeseburger", price: 149, category: "Burger", imageUrl: "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80" },
+        { name: "BBQ Bacon King", price: 219, category: "Burger", imageUrl: "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=800&q=80" },
+
+        // --- MEXICAN ---
+        { name: "Spicy Tacos", price: 129, category: "Mexican", imageUrl: "https://images.unsplash.com/photo-1613514785940-daed07799d9b?auto=format&fit=crop&w=800&q=80" },
+        // FIXED: New image for Burrito Bowl
+        { name: "Loaded Burrito Bowl", price: 189, category: "Mexican", imageUrl: "https://images.unsplash.com/photo-1543339308-43e59d6b73a6?auto=format&fit=crop&w=800&q=80" },
+
+        // --- ASIAN ---
+        { name: "Sushi Platter", price: 499, category: "Asian", imageUrl: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=800&q=80" },
+        { name: "Chicken Pad Thai", price: 249, category: "Asian", imageUrl: "https://images.unsplash.com/photo-1559314809-0d155014e29e?auto=format&fit=crop&w=800&q=80" },
+
+        // --- DRINKS ---
+        { name: "Iced Cola", price: 49, category: "Drinks", imageUrl: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=800&q=80" },
+        { name: "Fresh Lemonade", price: 59, category: "Drinks", imageUrl: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=800&q=80" },
+        { name: "Strawberry Milkshake", price: 99, category: "Drinks", imageUrl: "https://images.unsplash.com/photo-1579954115545-a95591f28bfc?auto=format&fit=crop&w=800&q=80" },
+
+        // --- DESSERTS ---
+        // FIXED: New image for Brownie
+        { name: "Chocolate Brownie", price: 119, category: "Dessert", imageUrl: "https://images.unsplash.com/photo-1515037893149-de7f840978e2?auto=format&fit=crop&w=800&q=80" },
+        { name: "NY Cheesecake", price: 159, category: "Dessert", imageUrl: "https://images.unsplash.com/photo-1524351199678-941a58a3df50?auto=format&fit=crop&w=800&q=80" }
     ];
 
     for (const item of dummyData) {
